@@ -2366,6 +2366,7 @@ exp(cbind("Odds ratio" = coef(niepotw),
 # Hospitalizacja 4.12.2022 -----------------
 
 #### covid w wywiadzie #####
+##### overall model #####
 covid %>% 
   count(wywiad_hosp, zmiana) %>% 
   group_by(zmiana)
@@ -2398,6 +2399,81 @@ summary(wywiad_szpital3)
 
 exp(cbind("Odds ratio" = coef(wywiad_szpital3), 
           confint.default(wywiad_szpital3, 
+                          level = 0.95)))
+
+##### women #####
+covid.women %>% 
+  count(wywiad_hosp, zmiana) %>% 
+  group_by(zmiana)
+
+wywiad_szpital.w <- mlogit(data = multi_diet.women,
+                         zmiana ~ 1|wywiad_hosp+wiek+BMI,
+                         reflevel = "no change")
+summary(wywiad_szpital.w)
+
+exp(cbind("Odds ratio" = coef(wywiad_szpital.w), 
+          confint.default(wywiad_szpital.w, 
+                          level = 0.95)))
+
+exp(cbind("Odds ratio" = coef(wywiad_szpital.w), 
+                       confint.default(wywiad_szpital.w, 
+                                       level = 0.95)))
+
+wywiad_szpital2.w <- mlogit(data = multi_diet.women,
+                          zmiana ~ 1|wywiad_hosp+wiek+BMI+samooc3gr,
+                          reflevel = "no change")
+summary(wywiad_szpital2.w)
+
+exp(cbind("Odds ratio" = coef(wywiad_szpital2.w), 
+          confint.default(wywiad_szpital2.w, 
+                          level = 0.95)))
+
+
+wywiad_szpital3.w <- mlogit(data = multi_diet.women,
+                          zmiana ~ 1|wywiad_hosp+wiek+BMI+samooc3gr+
+                            edu3gr+stancyw01+pali01+afciagla+dieta3,
+                          reflevel = "no change")
+summary(wywiad_szpital3.w)
+
+exp(cbind("Odds ratio" = coef(wywiad_szpital3.w), 
+          confint.default(wywiad_szpital3.w, 
+                          level = 0.95)))
+
+
+##### men #####
+covid.men %>% 
+  count(wywiad_hosp, zmiana) %>% 
+  group_by(zmiana)
+
+wywiad_szpital.m <- mlogit(data = multi_diet.men,
+                           zmiana ~ 1|wywiad_hosp+wiek+BMI,
+                           reflevel = "no change")
+summary(wywiad_szpital.m)
+
+exp(cbind("Odds ratio" = coef(wywiad_szpital.m), 
+          confint.default(wywiad_szpital.m, 
+                          level = 0.95)))
+
+
+
+wywiad_szpital2.m <- mlogit(data = multi_diet.men,
+                            zmiana ~ 1|wywiad_hosp+wiek+BMI+samooc3gr,
+                            reflevel = "no change")
+summary(wywiad_szpital2.m)
+
+exp(cbind("Odds ratio" = coef(wywiad_szpital2.m), 
+          confint.default(wywiad_szpital2.m, 
+                          level = 0.95)))
+
+
+wywiad_szpital3.m <- mlogit(data = multi_diet.men,
+                            zmiana ~ 1|wywiad_hosp+wiek+BMI+samooc3gr+
+                              edu3gr+stancyw01+pali01+afciagla+dieta3,
+                            reflevel = "no change")
+summary(wywiad_szpital3.m)
+
+exp(cbind("Odds ratio" = coef(wywiad_szpital3.m), 
+          confint.default(wywiad_szpital3.m, 
                           level = 0.95)))
 
 
@@ -2436,8 +2512,81 @@ exp(cbind("Odds ratio" = coef(lekarz_szpital3),
           confint.default(lekarz_szpital3, 
                           level = 0.95)))
 
+##### women #####
+covid.women %>% 
+  count(lek_hosp, zmiana) %>% 
+  group_by(zmiana)
 
-#### covid lekarz lub test (test_hosp) #####
+lekarz_szpital.w <- mlogit(data = multi_diet.women,
+                         zmiana ~ 1|lek_hosp+wiek+BMI,
+                         reflevel = "no change")
+summary(lekarz_szpital.w)
+
+exp(cbind("Odds ratio" = coef(lekarz_szpital.w), 
+          confint.default(lekarz_szpital.w, 
+                          level = 0.95)))
+
+
+lekarz_szpital2.w <- mlogit(data = multi_diet.women,
+                          zmiana ~ 1|lek_hosp+wiek+BMI+samooc3gr,
+                          reflevel = "no change")
+summary(lekarz_szpital2.w)
+
+exp(cbind("Odds ratio" = coef(lekarz_szpital2.w), 
+          confint.default(lekarz_szpital2.w, 
+                          level = 0.95)))
+
+
+lekarz_szpital3.w <- mlogit(data = multi_diet.women,
+                          zmiana ~ 1|lek_hosp+wiek+BMI+samooc3gr+
+                            edu3gr+stancyw01+pali01+afciagla+dieta3,
+                          reflevel = "no change")
+summary(lekarz_szpital3.w)
+
+exp(cbind("Odds ratio" = coef(lekarz_szpital3.w), 
+          confint.default(lekarz_szpital3.w, 
+                          level = 0.95)))
+
+
+
+##### men #####
+covid.men %>% 
+  count(lek_hosp, zmiana) %>% 
+  group_by(zmiana)
+
+lekarz_szpital.m <- mlogit(data = multi_diet.men,
+                           zmiana ~ 1|lek_hosp+wiek+BMI,
+                           reflevel = "no change")
+summary(lekarz_szpital.m)
+
+exp(cbind("Odds ratio" = coef(lekarz_szpital.m), 
+          confint.default(lekarz_szpital.m, 
+                          level = 0.95)))
+
+
+lekarz_szpital2.m <- mlogit(data = multi_diet.men,
+                            zmiana ~ 1|lek_hosp+wiek+BMI+samooc3gr,
+                            reflevel = "no change")
+summary(lekarz_szpital2.m)
+
+exp(cbind("Odds ratio" = coef(lekarz_szpital2.m), 
+          confint.default(lekarz_szpital2.m, 
+                          level = 0.95)))
+
+
+lekarz_szpital3.m <- mlogit(data = multi_diet.men,
+                            zmiana ~ 1|lek_hosp+wiek+BMI+samooc3gr+
+                              edu3gr+stancyw01+pali01+afciagla+dieta3,
+                            reflevel = "no change")
+summary(lekarz_szpital3.m)
+
+exp(cbind("Odds ratio" = coef(lekarz_szpital3.m), 
+          confint.default(lekarz_szpital3.m, 
+                          level = 0.95)))
+
+
+
+#### covid test (test_hosp) #####
 covid %>% 
   count(test_hosp, zmiana) %>% 
   group_by(zmiana)
@@ -2471,6 +2620,79 @@ summary(test_szpital3)
 exp(cbind("Odds ratio" = coef(test_szpital3), 
           confint.default(test_szpital3, 
                           level = 0.95)))
+
+##### women #####
+covid.women %>% 
+  count(test_hosp, zmiana) %>% 
+  group_by(zmiana)
+
+test_szpital.w <- mlogit(data = multi_diet.women,
+                       zmiana ~ 1|test_hosp+wiek+BMI,
+                       reflevel = "no change")
+summary(test_szpital.w)
+
+exp(cbind("Odds ratio" = coef(test_szpital.w), 
+          confint.default(test_szpital.w, 
+                          level = 0.95)))
+
+
+test_szpital2.w <- mlogit(data = multi_diet.women,
+                        zmiana ~ 1|test_hosp+wiek+BMI+samooc3gr,
+                        reflevel = "no change")
+summary(test_szpital2.w)
+
+exp(cbind("Odds ratio" = coef(test_szpital2.w), 
+          confint.default(test_szpital2.w, 
+                          level = 0.95)))
+
+
+test_szpital3.w <- mlogit(data = multi_diet.women,
+                        zmiana ~ 1|test_hosp+wiek+BMI+samooc3gr+
+                          edu3gr+stancyw01+pali01+afciagla+dieta3,
+                        reflevel = "no change")
+summary(test_szpital3.w)
+
+exp(cbind("Odds ratio" = coef(test_szpital3.w), 
+          confint.default(test_szpital3.w, 
+                          level = 0.95)))
+
+
+##### men #####
+covid.men %>% 
+  count(test_hosp, zmiana) %>% 
+  group_by(zmiana)
+
+test_szpital.m <- mlogit(data = multi_diet.men,
+                         zmiana ~ 1|test_hosp+wiek+BMI,
+                         reflevel = "no change")
+summary(test_szpital.m)
+
+exp(cbind("Odds ratio" = coef(test_szpital.m), 
+          confint.default(test_szpital.m, 
+                          level = 0.95)))
+
+
+test_szpital2.m <- mlogit(data = multi_diet.men,
+                          zmiana ~ 1|test_hosp+wiek+BMI+samooc3gr,
+                          reflevel = "no change")
+summary(test_szpital2.m)
+
+exp(cbind("Odds ratio" = coef(test_szpital2.m), 
+          confint.default(test_szpital2.m, 
+                          level = 0.95)))
+
+
+test_szpital3.m <- mlogit(data = multi_diet.men,
+                          zmiana ~ 1|test_hosp+wiek+BMI+samooc3gr+
+                            edu3gr+stancyw01+pali01+afciagla+dieta3,
+                          reflevel = "no change")
+summary(test_szpital3.m)
+
+exp(cbind("Odds ratio" = coef(test_szpital3.m), 
+          confint.default(test_szpital3.m, 
+                          level = 0.95)))
+
+
 
 
 
