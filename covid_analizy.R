@@ -145,7 +145,7 @@ covid$lek_hosp <- factor(covid$lek_hosp,
 
 covid %>% 
   count(covtest_rekod)
-covid$hosp01test_plus
+
 
 covid$test_hosp[covid$covtest_rekod == "positive" & covid$hosp01test_plus == "yes"] <- 2
 covid$test_hosp[covid$covtest_rekod == "positive" & covid$hosp01test_plus == "no"] <- 1
@@ -181,6 +181,14 @@ table(covid$cov_szczepienie)
 hist(covid$afciagla)
 
 
+
+covid %>% 
+  filter(covtest == "done")
+
+
+
+
+
 covid$nohosp_vshealthy[covid$covtest_rekod == "positive" & covid$hosp01test_plus == "no"] <- 0
 covid$nohosp_vshealthy[covid$covtest_rekod == "no"] <- 1
 
@@ -189,6 +197,38 @@ covid$nohosp_vshealthy <- factor(covid$nohosp_vshealthy,
                                  labels = c("no hosp", "healthy"))
 
 covid$nohosp_vshealthy <- relevel(covid$nohosp_vshealthy, ref = "healthy")
+
+
+
+
+
+
+
+covid$hosp_health[covid$hosp01test_plus == "no"] <- 1
+covid$hosp_health[covid$covtest_rekod == "no"] <- 0
+
+covid$nonhospitalized[covid$hosp01test_plus == "no"] <- 1
+covid$nonhospitalized[covid$covtest_rekod == "no"] <- 0
+
+
+table(covid$nonhospitalized)
+
+covid %>% 
+  select(covtest_rekod, hosp01test_plus, nonhospitalized) %>% 
+  print(n=1000)
+
+
+
+
+
+covid$nonhospitalized <- factor(covid$nonhospitalized,
+                            levels = c(0,1),
+                            labels = c("healthy", "nonhosp"))
+
+
+
+
+covid$nonhospitalized <- relevel(covid$nonhospitalized, ref = "healthy")
 
 
 
@@ -1513,7 +1553,7 @@ exp(cbind("Odds ratio" = coef(covid_test),
 
 table(covid$covtest_rekod)
 
-#hospotalizacja u 191
+#hospitalizacja u 191
 covid_hosp191 <- mlogit(data = multi_diet,
                      zmiana ~ 1|hosp01test_plus+wiek+plec01+BMI,
                      reflevel = "no change")
@@ -1524,6 +1564,16 @@ exp(cbind("Odds ratio" = coef(covid_hosp191),
                           level = 0.95)))
 covid %>% 
   count(hosp01test_plus, co)
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2701,7 +2751,15 @@ exp(cbind("Odds ratio" = coef(test_szpital3.m),
 
 
 
+non.hosp <- mlogit(data = multi_diet.men,
+                   zmiana ~ 1|nonhospitalized+wiek+BMI+samooc3gr+
+                     edu3gr+stancyw01+pali01+afciagla+dieta3,
+                   reflevel = "no change")
+summary(non.hosp)
 
+exp(cbind("Odds ratio" = coef(non.hosp), 
+          confint.default(non.hosp, 
+                          level = 0.95)))
 
 
 
